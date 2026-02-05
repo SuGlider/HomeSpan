@@ -53,13 +53,20 @@ const TLV8_names HAP_Names[] = {
 #define hap_accessory_IDBYTES   17
  
 /////////////////////////////////////////////////
-// NONCE Structure (HAP used last 64 of 96 bits)
+// NONCE Structure (HAP uses last 64 of 96 bits)
 
-struct Nonce {
-  uint8_t x[12];
+class Nonce {
+  struct {
+    uint32_t padding;       // aligns words so compiler does not need to add padding after z[4]
+    uint8_t z[4]={0};       // initial 32-bits are always zero
+    uint64_t n;             // the 64-bit non-zero portion of the nonce
+  };
+
+  public:
+  
   Nonce();
   void zero();
-  uint8_t *get();
+  const uint8_t *get();
   void inc();
 };
 
