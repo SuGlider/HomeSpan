@@ -1158,6 +1158,18 @@ void HAPClient::getStatusURL(HAPClient *hapClient, void (*callBack)(const char *
     
   hapOut << "</table>\n";
   hapOut << "<p></p>";
+
+  hapOut << "<table class=clientTable><tr><th>Client #</th><th>IP Address</th><th>Controller</th></tr>\n";
+  for(auto it=homeSpan.hapList.begin(); it!=homeSpan.hapList.end(); ++it){
+    hapOut << "<tr><td>" << (*it).clientNumber << "</td><td>" << (*it).client.remoteIP().toString().c_str() << "</td><td>";
+    if((*it).cPair)          
+      hapOut << HAPClient::char2String((*it).cPair->getID(),36).c_str() << ((*it).cPair->isAdmin()?"  (admin)":"(regular)");
+    else
+      hapOut << "N/A";
+    hapOut << "</td></tr>\n";
+  }
+  hapOut << "</table>\n";
+  hapOut << "<p></p>";
   
   if(homeSpan.webLog.maxEntries>0){
     hapOut << "<table class=tab2><tr><th>Entry</th><th>Up Time</th><th>Log Time</th><th>Client</th><th>Message</th></tr>\n";
