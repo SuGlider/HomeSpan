@@ -804,21 +804,15 @@ void Span::processSerialCommand(const char *c){
       
       if(webLog.isEnabled && hostName!=NULL)   
         LOG0("Web Logging:       http://%s.local:%d%s\n",hostName,tcpPortNum,webLog.statusURL);
-      LOG0("\nAccessory ID:      ");
-      HAPClient::charPrintRow(HAPClient::accessory.ID,17);
-      LOG0("                               LTPK: ");
-      HAPClient::hexPrintRow(HAPClient::accessory.LTPK,32);
-      LOG0("\n");
 
+      LOG0("\n");
       HAPClient::printControllers();
       LOG0("\n");
 
       for(auto it=hapList.begin(); it!=hapList.end(); ++it){
         LOG0("Client #%d: %s",(*it).clientNumber,(*it).client.remoteIP().toString().c_str());
         if((*it).cPair){
-          LOG0("  ID=");
-          HAPClient::charPrintRow((*it).cPair->getID(),36);
-          LOG0((*it).cPair->isAdmin()?"   (admin)\n":" (regular)\n");
+          LOG0("  ID=%s %s",HAPClient::char2String((*it).cPair->getID(),36).c_str(),(*it).cPair->isAdmin()?"  (admin)\n":"(regular)\n");
         } else {
           LOG0("  (unverified)\n");
         }
@@ -1277,8 +1271,7 @@ void Span::processSerialCommand(const char *c){
         LOG0("\n*** Error in size of Accessory data - cloning cancelled.  Restarting...\n\n");
         reboot();
       } else {
-        HAPClient::charPrintRow(HAPClient::accessory.ID,17);
-        LOG0("\n");
+        LOG0("%s\n",HAPClient::char2String(HAPClient::accessory.ID,17).c_str());
       }
 
       HAPClient::controllerList.clear();
@@ -1298,8 +1291,7 @@ void Span::processSerialCommand(const char *c){
             reboot();
           } else {
             HAPClient::controllerList.push_back(tCont);
-            HAPClient::charPrintRow(tCont.getID(),36);
-            LOG0("\n");
+            LOG0("%s\n",HAPClient::char2String(tCont.getID(),36).c_str());
           }
         }
       }

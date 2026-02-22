@@ -139,14 +139,13 @@ struct HAPClient {
     
   static void init();            // initialize HAP after start-up
     
-  static void hexPrintColumn(const uint8_t *buf, int n, int minLogLevel=0);            // prints 'n' bytes of *buf as HEX, one byte per row, subject to specified minimum log level
-  static void hexPrintRow(const uint8_t *buf, int n, int minLogLevel=0);               // prints 'n' bytes of *buf as HEX, all on one row, subject to specified minimum log level
-  static void charPrintRow(const uint8_t *buf, int n, int minLogLevel=0);              // prints 'n' bytes of *buf as CHAR, all on one row, subject to specified minimum log level
+  static String hex2String(const uint8_t *buf, int n);                                 // converts data buffer to hex String
+  static String char2String(const uint8_t *buf, int n);                                // converts data buffer to character String
   
   static Controller *findController(uint8_t *id);                                      // returns pointer to controller with matching ID (or NULL if no match)
   static tagError addController(uint8_t *id, uint8_t *ltpk, boolean admin);            // stores data for new Controller with specified data.  Returns tagError (if any)
   static void removeController(uint8_t *id);                                           // removes specific Controller.  If no remaining admin Controllers, remove all others (if any) as per HAP requirements.
-  static void printControllers(int minLogLevel=0);                                     // prints IDs of all allocated (paired) Controller, subject to specified minimum log level
+  static void printControllers();                                                      // prints IDs of all allocated (paired) Controller
   static void saveControllers();                                                       // saves Controller list in NVS
   static int nAdminControllers();                                                      // returns number of admin Controller
   static void tearDown(uint8_t *id);                                                   // tears down connections using Controller with ID=id; tears down all connections if id=NULL

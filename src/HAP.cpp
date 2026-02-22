@@ -85,12 +85,6 @@ void HAPClient::init(){
     }
   }
   
-  LOG0("Accessory ID:      ");
-  charPrintRow(accessory.ID,17);
-  LOG0("                               LTPK: ");
-  hexPrintRow(accessory.LTPK,32);
-  LOG0("\n");
-
   printControllers();                                                         
 
   if(!nvs_get_blob(homeSpan.hapNVS,"HAPHASH",NULL,&len)){                 // if found HAP HASH structure
@@ -696,18 +690,14 @@ int HAPClient::postPairVerifyURL(uint8_t *content, size_t len){
       Controller *tPair;                                            // temporary pointer to Controller
       
       if(!(tPair=findController(*itIdentifier))){
-        LOG1("\n*** WARNING: Unrecognized Controller ID: ");
-        charPrintRow(*itIdentifier,hap_controller_IDBYTES,1);
-        LOG1("\n\n");
+        LOG1("\n*** WARNING: Unrecognized Controller ID: %s\n\n",char2String(*itIdentifier,hap_controller_IDBYTES).c_str());
         responseTLV.add(kTLVType_State,pairState_M4);               // set State=<M4>
         responseTLV.add(kTLVType_Error,tagError_Authentication);    // set Error=Authentication
         tlvRespond(responseTLV);                                    // send response to client
         return(0);
       }
 
-      LOG2("\n*** Verifying session with Controller ID: ");
-      charPrintRow(tPair->ID,hap_controller_IDBYTES,2);
-      LOG2("...\n");
+      LOG2("\n*** Verifying session with Controller ID: %s...\n",char2String(tPair->ID,hap_controller_IDBYTES).c_str());
 
       // concatenate Controller's Curve25519 Public Key (from previous step), Controller's Pairing ID, and Accessory's Curve25519 Public Key (from previous step) into iosDeviceInfo     
 
@@ -1329,35 +1319,29 @@ int HAPClient::receiveEncrypted(uint8_t *httpBuf, int messageSize){
 /////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
 
-void HAPClient::hexPrintColumn(const uint8_t *buf, int n, int minLogLevel){
+String HAPClient::hex2String(const uint8_t *buf, int n){
 
-  if(homeSpan.logLevel<minLogLevel)
-    return;
-  
-  for(int i=0;i<n;i++)
-    Serial.printf("%d) %02X\n",i,buf[i]);
+  String s="";
+  char c[3];
+
+  for(int i=0;i<n;i++){
+    sprintf(c,"%02X",buf[i]);
+    s+=c;
+  }
+
+  return(s);
 }
 
 //////////////////////////////////////
 
-void HAPClient::hexPrintRow(const uint8_t *buf, int n, int minLogLevel){
+String HAPClient::char2String(const uint8_t *buf, int n){
 
-  if(homeSpan.logLevel<minLogLevel)
-    return;
+  String s="";
 
   for(int i=0;i<n;i++)
-    Serial.printf("%02X",buf[i]);
-}
+    s+=(char)buf[i];
 
-//////////////////////////////////////
-
-void HAPClient::charPrintRow(const uint8_t *buf, int n, int minLogLevel){
-
-  if(homeSpan.logLevel<minLogLevel)
-    return;
-  
-  for(int i=0;i<n;i++)
-    Serial.printf("%c",buf[i]);
+  return(s);
 }
 
 //////////////////////////////////////
@@ -1393,18 +1377,14 @@ tagError HAPClient::addController(uint8_t *id, uint8_t *ltpk, boolean admin){
   if(!cTemp){                                            // new controller    
     if(controllerList.size()<MAX_CONTROLLERS){
       controllerList.emplace_back(id,ltpk,admin);        // create and store data
-      LOG2("\n*** Added Controller: ");
-      charPrintRow(id,hap_controller_IDBYTES,2);
-      LOG2(admin?" (admin)\n\n":" (regular)\n\n");
+      LOG2("\n*** Added Controller: %s %s\n\n",char2String(id,hap_controller_IDBYTES).c_str(),admin?"(admin)":"(regular)");
       saveControllers();
     } else {
       LOG0("\n*** ERROR: Can't pair more than %d Controllers\n\n",MAX_CONTROLLERS);
       err=tagError_MaxPeers;
     }    
   } else if(!memcmp(ltpk,cTemp->LTPK,crypto_sign_PUBLICKEYBYTES)){   // existing controller with same LTPK
-    LOG2("\n*** Updated Controller: ");
-    charPrintRow(id,hap_controller_IDBYTES,2);
-    LOG2(" from %s to %s\n\n",cTemp->admin?"(admin)":"(regular)",admin?"(admin)":"(regular)");
+    LOG2("\n*** Updated Controller: %s from %s to %s\n\n",char2String(id,hap_controller_IDBYTES).c_str(),cTemp->admin?"(admin)":"(regular)",admin?"(admin)":"(regular)");
     cTemp->admin=admin;
     saveControllers();    
   } else {
@@ -1422,15 +1402,11 @@ void HAPClient::removeController(uint8_t *id){
   auto it=std::find_if(controllerList.begin(), controllerList.end(), [id](const Controller& cTemp){return(!memcmp(cTemp.ID,id,hap_controller_IDBYTES));});
 
   if(it==controllerList.end()){
-    LOG2("\n*** Request to Remove Controller Ignored - Controller Not Found: ");
-    charPrintRow(id,hap_controller_IDBYTES,2);
-    LOG2("\n");
+    LOG2("\n*** Request to Remove Controller Ignored - Controller Not Found: %s\n",char2String(id,hap_controller_IDBYTES).c_str());
     return;
   }
 
-  LOG1("\n*** Removing Controller: ");
-  charPrintRow((*it).ID,hap_controller_IDBYTES,2);
-  LOG1((*it).admin?" (admin)\n":" (regular)\n");
+  LOG1("\n*** Removing Controller: %s %s\n",char2String((*it).ID,hap_controller_IDBYTES).c_str(),(*it).admin?"(admin)":"(regular)");
   
   tearDown((*it).ID);         // teardown any connections using this Controller
   controllerList.erase(it);   // remove Controller
@@ -1464,23 +1440,17 @@ void HAPClient::tearDown(uint8_t *id){
 
 //////////////////////////////////////
 
-void HAPClient::printControllers(int minLogLevel){
+void HAPClient::printControllers(){
 
-  if(homeSpan.logLevel<minLogLevel)
-    return;
+  LOG0("Accessory ID:      %s                               LTPK: %s\n",char2String(accessory.ID,17).c_str(),hex2String(accessory.LTPK,32).c_str());
 
   if(controllerList.empty()){
-    Serial.printf("No Paired Controllers\n");
+    LOG0("No Paired Controllers\n");
     return;    
   }
   
-  for(auto it=controllerList.begin();it!=controllerList.end();it++){
-    Serial.printf("Paired Controller: ");
-    charPrintRow((*it).ID,hap_controller_IDBYTES);
-    Serial.printf("%s  LTPK: ",(*it).admin?"   (admin)":" (regular)");
-    hexPrintRow((*it).LTPK,crypto_sign_PUBLICKEYBYTES);
-    Serial.printf("\n");    
-  }
+  for(auto it=controllerList.begin();it!=controllerList.end();it++)
+    LOG0("Paired Controller: %s %s  LTPK: %s\n",char2String((*it).ID,hap_controller_IDBYTES).c_str(),(*it).admin?"  (admin)":"(regular)",hex2String((*it).LTPK,crypto_sign_PUBLICKEYBYTES).c_str());
 }
 
 //////////////////////////////////////
