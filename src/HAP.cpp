@@ -543,7 +543,7 @@ int HAPClient::postPairSetupURL(uint8_t *content, size_t len){
       
       LOG1("\n*** ACCESSORY PAIRED! ***\n");
 
-      STATUS_UPDATE(on(),HS_PAIRED)      
+      STATUS_UPDATE(LED_PAIRED,HS_PAIRED)      
             
       if(homeSpan.pairCallback)                             // if set, invoke user-defined Pairing Callback to indicate device has been paired
         homeSpan.pairCallback(true);

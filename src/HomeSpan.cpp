@@ -1399,7 +1399,7 @@ void Span::resetStatus(){
   else if(!HAPClient::nAdminControllers())
     STATUS_UPDATE(start(LED_PAIRING_NEEDED),HS_PAIRING_NEEDED)
   else
-    STATUS_UPDATE(on(),HS_PAIRED)
+    STATUS_UPDATE(start(LED_PAIRED),HS_PAIRED)
 }
 
 ///////////////////////////////
@@ -1418,7 +1418,7 @@ const char* Span::statusString(HS_STATUS s){
     case HS_WIFI_CONNECTING: return("WiFi Connecting");
     case HS_ETH_CONNECTING: return("Ethernet Connecting");
     case HS_PAIRING_NEEDED: return("Device not yet Paired");
-    case HS_PAIRED: return("Device Paired");
+    case HS_PAIRED: return("Device Paired.  Waiting for HomeKit Connection");
     case HS_ENTERING_CONFIG_MODE: return("Entering Command Mode");
     case HS_CONFIG_MODE_EXIT: return("1. Exit Command Mode"); 
     case HS_CONFIG_MODE_REBOOT: return("2. Reboot Device");
