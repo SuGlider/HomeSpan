@@ -264,15 +264,18 @@ void Span::pollTask() {
     LOG2("\n");
   }
 
+  boolean hkConnected=false;                                                 // flag to indicate whether there is at least one HomeKit client connected
   currentClient=hapList.begin();
-  while(currentClient!=hapList.end()){
 
+  while(currentClient!=hapList.end()){
     if(currentClient->client.connected()){                                   // if the client is connected
       if(currentClient->client.available()){                                 // if client has data available
         homeSpan.lastClientIP=currentClient->client.remoteIP().toString();   // store IP Address for web logging
         currentClient->processRequest();                                     // PROCESS HAP REQUEST
         homeSpan.lastClientIP="0.0.0.0";                                     // reset stored IP address to show "0.0.0.0" if homeSpan.getClientIP() is used in any other context 
       }
+      if(currentClient->cPair)
+        hkConnected=true;
       currentClient++;
     } else {
       LOG1("** Client #%d DISCONNECTED (%lu sec)\n",currentClient->clientNumber,millis()/1000);
@@ -280,6 +283,11 @@ void Span::pollTask() {
       currentClient=hapList.erase(currentClient);                            // remove HAPClient connection
     }
   }
+
+  if(hkConnected && getStatus()!=HS_CONNECTED)           // HomeKit is connected but hsStatus does not yet reflect that
+    STATUS_UPDATE(on(),HS_CONNECTED)
+  else if(!hkConnected && getStatus()==HS_CONNECTED)     // HomeKit is NOT connected but hsStatus thinks it is 
+    resetStatus();
       
   snapTime=millis();                                     // snap the current time for use in ALL loop routines
   
@@ -1419,6 +1427,7 @@ const char* Span::statusString(HS_STATUS s){
     case HS_ETH_CONNECTING: return("Ethernet Connecting");
     case HS_PAIRING_NEEDED: return("Device not yet Paired");
     case HS_PAIRED: return("Device Paired.  Waiting for HomeKit Connection");
+    case HS_CONNECTED: return("Device is Connected to HomeKit");
     case HS_ENTERING_CONFIG_MODE: return("Entering Command Mode");
     case HS_CONFIG_MODE_EXIT: return("1. Exit Command Mode"); 
     case HS_CONFIG_MODE_REBOOT: return("2. Reboot Device");

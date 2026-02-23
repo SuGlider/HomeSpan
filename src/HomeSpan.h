@@ -101,13 +101,14 @@ extern "C" bool verifyRollbackLater();    // declare pre-defined Arduino-ESP32 v
 
 ///////////////////////////////
 
-#define STATUS_UPDATE(LED_UPDATE,MESSAGE_UPDATE)  {homeSpan.statusLED->LED_UPDATE;if(homeSpan.statusCallback)homeSpan.statusCallback(MESSAGE_UPDATE);}
+#define STATUS_UPDATE(LED_UPDATE,NEW_STATUS)  {homeSpan.statusLED->LED_UPDATE;homeSpan.hsStatus=NEW_STATUS;if(homeSpan.statusCallback)homeSpan.statusCallback(NEW_STATUS);}
 
 enum HS_STATUS {
   HS_WIFI_NEEDED,                         // WiFi Credentials have not yet been set/stored
   HS_WIFI_CONNECTING,                     // HomeSpan is trying to connect to the network specified in the stored WiFi Credentials
   HS_PAIRING_NEEDED,                      // HomeSpan is connected to central WiFi network, but device has not yet been paired to HomeKit
   HS_PAIRED,                              // HomeSpan is connected to central WiFi network and the device has been paired to HomeKit
+  HS_CONNECTED,                           // HomeSpan has at least one verified client connection from HomeKit
   HS_ENTERING_CONFIG_MODE,                // User has requested the device to enter into Command Mode
   HS_CONFIG_MODE_EXIT,                    // HomeSpan is in Command Mode with "Exit Command Mode" specified as choice
   HS_CONFIG_MODE_REBOOT,                  // HomeSpan is in Command Mode with "Reboot" specified as choice
@@ -289,6 +290,7 @@ class Span{
   boolean initialPollingCompleted=false;        // flag to indicate whether polling task has initially completed
   boolean forceConfigIncrement=false;           // flag to indicate whether configuration number (MDNS C# value) should be incremented even if database config has not changed
   char *compileTime=NULL;                       // optional compile time string --- can be set with call to setCompileTime()
+  HS_STATUS hsStatus;                           // current HomeSpan status
    
   nvs_handle charNVS;                           // handle for non-volatile-storage of Characteristics data
   nvs_handle wifiNVS=0;                         // handle for non-volatile-storage of WiFi data
@@ -437,7 +439,8 @@ class Span{
   Span& setApFunction(void (*f)()){apFunction=f;return(*this);}                          // sets an optional user-defined function to call when activating the WiFi Access Point  
   Span& enableAutoStartAP(){autoStartAPEnabled=true;return(*this);}                      // enables auto start-up of Access Point when WiFi Credentials not found
   Span& setWifiCredentials(const char *ssid, const char *pwd);                           // sets WiFi Credentials
-  Span& setConnectionTimes(uint32_t minTime, uint32_t maxTime, uint8_t nSteps);          // sets min/max WiFi connection times (in seconds) and number of steps  
+  Span& setConnectionTimes(uint32_t minTime, uint32_t maxTime, uint8_t nSteps);          // sets min/max WiFi connection times (in seconds) and number of steps
+  HS_STATUS getStatus(){return(hsStatus);};                                              // returns current HomeSpan status
   Span& setStatusCallback(void (*f)(HS_STATUS status)){statusCallback=f;return(*this);}  // sets an optional user-defined function to call when HomeSpan status changes
   const char* statusString(HS_STATUS s);                                                 // returns char string for HomeSpan status change messages
   Span& setPairingCode(const char *s, boolean progCall=true);                            // sets the Pairing Code - use is NOT recommended.  Use 'S' from CLI instead
