@@ -264,7 +264,7 @@ void Span::pollTask() {
     LOG2("\n");
   }
 
-  boolean hkConnected=false;                                                 // flag to indicate whether there is at least one HomeKit client connected
+  HS_STATUS triggerStatus=HS_CONNECTED;
   currentClient=hapList.begin();
 
   while(currentClient!=hapList.end()){
@@ -275,7 +275,7 @@ void Span::pollTask() {
         homeSpan.lastClientIP="0.0.0.0";                                     // reset stored IP address to show "0.0.0.0" if homeSpan.getClientIP() is used in any other context 
       }
       if(currentClient->cPair)
-        hkConnected=true;
+        triggerStatus=HS_PAIRED;
       currentClient++;
     } else {
       LOG1("** Client #%d DISCONNECTED (%lu sec)\n",currentClient->clientNumber,millis()/1000);
@@ -284,9 +284,7 @@ void Span::pollTask() {
     }
   }
 
-  if(hkConnected && getStatus()!=HS_CONNECTED)           // HomeKit is connected but hsStatus does not yet reflect that
-    STATUS_UPDATE(on(),HS_CONNECTED)
-  else if(!hkConnected && getStatus()==HS_CONNECTED)     // HomeKit is NOT connected but hsStatus thinks it is 
+  if(getStatus()==triggerStatus)
     resetStatus();
       
   snapTime=millis();                                     // snap the current time for use in ALL loop routines
@@ -1406,8 +1404,10 @@ void Span::resetStatus(){
     STATUS_UPDATE(start(LED_WIFI_CONNECTING),ethernetEnabled?HS_ETH_CONNECTING:HS_WIFI_CONNECTING)
   else if(!HAPClient::nAdminControllers())
     STATUS_UPDATE(start(LED_PAIRING_NEEDED),HS_PAIRING_NEEDED)
-  else
+  else if(std::find_if(hapList.begin(),hapList.end(),[](HAPClient &client)->boolean{return(client.cPair!=NULL);})==hapList.end())
     STATUS_UPDATE(start(LED_PAIRED),HS_PAIRED)
+  else
+    STATUS_UPDATE(on(),HS_CONNECTED)
 }
 
 ///////////////////////////////
