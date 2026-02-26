@@ -240,17 +240,16 @@ void Span::pollTask() {
     WiFi.scanNetworks(true, false, false, 300, 0, network.wifiData.ssid, nullptr);     // start scan in background
   }
 
-  arduino_event_t event;
-  if(xQueueReceive(networkEventQueue, &event, (TickType_t)0))
-    networkCallback(event);
-
   char cBuf[65]="-";
-  
   if(!serialInputDisabled && Serial.available()){
     readSerial(cBuf,64);
     processSerialCommand(cBuf);
   }
-
+  
+  arduino_event_t event;
+  while(xQueueReceive(networkEventQueue, &event, (TickType_t)0))
+    networkCallback(event);
+  
   if(hapServer->hasClient()){  
  
     auto it=hapList.emplace(hapList.begin());                                // create new HAPClient connection
@@ -464,6 +463,8 @@ void Span::networkCallback(const arduino_event_t &event){
         if(WiFi.scanComplete()>0 && WiFi.BSSIDstr(0)!=WiFi.BSSIDstr() && WiFi.RSSI(0)>=WiFi.RSSI()+rescanThreshold){
           addWebLog(true,"*** Switching to Access Point with stronger RSSI...");
           WiFi.disconnect();
+          delay(10);
+          return;
         } else {
           LOG2("Rescan completed.  No stronger signals found.\n");
           if(rescanPeriodicTime>0){
