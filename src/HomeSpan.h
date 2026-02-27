@@ -101,8 +101,6 @@ extern "C" bool verifyRollbackLater();    // declare pre-defined Arduino-ESP32 v
 
 ///////////////////////////////
 
-#define STATUS_UPDATE(LED_UPDATE,NEW_STATUS)  {homeSpan.statusLED->LED_UPDATE;homeSpan.hsStatus=NEW_STATUS;if(homeSpan.statusCallback)homeSpan.statusCallback(NEW_STATUS);}
-
 enum HS_STATUS {
   HS_WIFI_NEEDED,                         // WiFi Credentials have not yet been set/stored
   HS_WIFI_CONNECTING,                     // HomeSpan is trying to connect to the network specified in the stored WiFi Credentials
@@ -360,7 +358,8 @@ class Span{
   void pollTask();                                                       // poll HAP Clients and process any new HAP requests
   void configureNetwork();                                               // configure Network services (MDNS, WebLog,  OTA, etc.) and start HAP Server
   void commandMode();                                                    // allows user to control and reset HomeSpan settings with the control button
-  void resetStatus();                                                    // resets statusLED and calls statusCallback based on current HomeSpan status
+  void setStatus(HS_STATUS hst);                                         // sets hsStatus to hst, updates statusLED, and calls statusCallback
+  void resetStatus();                                                    // resets hsStatus, updates statusLED, and calls statusCallback
   void reboot();                                                         // reboots device
 
   void printfAttributes(int flags=GET_VALUE|GET_META|GET_PERMS|GET_TYPE|GET_DESC);   // writes Attributes JSON database to hapOut stream

@@ -543,7 +543,7 @@ int HAPClient::postPairSetupURL(uint8_t *content, size_t len){
       
       LOG1("\n*** ACCESSORY PAIRED! ***\n");
 
-      STATUS_UPDATE(start(LED_PAIRED),HS_PAIRED)      
+      homeSpan.setStatus(HS_PAIRED);
             
       if(homeSpan.pairCallback)                             // if set, invoke user-defined Pairing Callback to indicate device has been paired
         homeSpan.pairCallback(true);
@@ -1430,7 +1430,7 @@ void HAPClient::removeController(uint8_t *id){
     tearDown(NULL);                                              // teardown all remaining connections
     controllerList.clear();                                      // remove all remaining Controllers
     mdns_service_txt_item_set("_hap","_tcp","sf","1");           // set Status Flag = 1 (Table 6-8)
-    STATUS_UPDATE(start(LED_PAIRING_NEEDED),HS_PAIRING_NEEDED)   // set optional Status LED
+    homeSpan.resetStatus();                                      // reset hsStatus and StatusLED
     if(homeSpan.pairCallback)                                    // if set, invoke user-defined Pairing Callback to indicate device has been un-paired
       homeSpan.pairCallback(false);    
   }
