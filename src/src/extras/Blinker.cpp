@@ -90,7 +90,7 @@ void Blinker::start(int period, float dutyCycle, int nBlinks, int delayTime, boo
     
   onTime=dutyCycle*period;
   offTime=period-onTime;
-  this->delayTime=delayTime+offTime;
+  this->delayTime=delayTime;
   this->nBlinks=nBlinks;
 
   stop();

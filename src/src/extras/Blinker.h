@@ -74,7 +74,7 @@ class Blinker {
 //  Creates a generic blinking LED in a separate task thread
 //
 //  led:              An initialized LED device that implements the Blinkable Interface
-////
+//
 //  autoOffDuration:  If greater than zero, Blinker will automatically turn off after autoOffDuration (in seconds) has elapsed
 //                    Blinker will resume normal operation upon next call to start(), on(), or off()
 //                    Program must periodically call check() for auto-off functionality to work
