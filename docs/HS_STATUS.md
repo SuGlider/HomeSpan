@@ -8,6 +8,7 @@ enum HS_STATUS {
   HS_WIFI_CONNECTING,                     // HomeSpan is trying to connect to the network specified in the stored WiFi Credentials
   HS_PAIRING_NEEDED,                      // HomeSpan is connected to central WiFi network, but device has not yet been paired to HomeKit
   HS_PAIRED,                              // HomeSpan is connected to central WiFi network and ther device has been paired to HomeKit
+  HS_CONNECTED,                           // HomeSpan has at least one verified client connection from HomeKit
   HS_ENTERING_CONFIG_MODE,                // User has requested the device to enter into Command Mode
   HS_CONFIG_MODE_EXIT,                    // HomeSpan is in Command Mode with "Exit Command Mode" specified as choice
   HS_CONFIG_MODE_REBOOT,                  // HomeSpan is in Command Mode with "Reboot" specified as choice
@@ -39,7 +40,8 @@ const char* Span::statusString(HS_STATUS s){
     case HS_WIFI_CONNECTING: return("WiFi Connecting");
     case HS_ETH_CONNECTING: return("Ethernet Connecting");
     case HS_PAIRING_NEEDED: return("Device not yet Paired");
-    case HS_PAIRED: return("Device Paired");
+    case HS_PAIRED: return("Device Paired.  Waiting for HomeKit Connection");
+    case HS_CONNECTED: return("Device is Connected to HomeKit");
     case HS_ENTERING_CONFIG_MODE: return("Entering Command Mode");
     case HS_CONFIG_MODE_EXIT: return("1. Exit Command Mode"); 
     case HS_CONFIG_MODE_REBOOT: return("2. Reboot Device");
