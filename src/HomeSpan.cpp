@@ -1440,7 +1440,7 @@ void Span::setStatus(HS_STATUS hst){
     case HS_AP_CONNECTED: homeSpan.statusLED->start(300,0.5,2,400); break;        // medium double-blink
     case HS_AP_TERMINATED: statusLED->start(100); break;                          // rapid flashing
     case HS_OTA_STARTED: homeSpan.statusLED->start(300,0.5,3,400); break;         // medium triple-blink
-    case HS_WIFI_SCANNING: homeSpan.statusLED->start(300,0.8,3,400); break;       // medium inverted triple-blink
+    case HS_WIFI_SCANNING: homeSpan.statusLED->start(300,0.8,3,400); break;       // long triple-blink
     default: return;                                                              // ignore unknown status type - should not occur                                                             
   }
 
