@@ -1,15 +1,16 @@
 # HomeSpan Status
 
 
-|HomeSpan Status|LED Pattern|
-|---|---|
-|HS_WIFI_NEEDED|<img src="images/ledPatterns/slowSingleBlink.svg" width=300>|
-|HS_WIFI_CONNECTING|<img src="images/ledPatterns/slowFlashing.svg" width=300>|
-|HS_ETH_CONNECTING|<img src="images/ledPatterns/slowFlashing.svg" width=300>|
-|HS_PAIRING_NEEDED|<img src="images/ledPatterns/slowDoubleBlink.svg" width=300>|
-|HS_PAIRED|<img src="images/ledPatterns/slowDoubleBlinkInverted.svg" width=300>|
-|HS_CONNECTED|<img src="images/ledPatterns/on.svg" width=300>|
-|HS_ENTERING_CONFIG_MODE|<img src="images/ledPatterns/rapidFlashing.svg" width=300>|
+|HomeSpan Status|Description|Status LED Pattern|
+|---|---|---|
+|HS_WIFI_NEEDED|WiFi Credentials Needed|<img src="images/ledPatterns/slowSingleBlink.svg" width=300>|
+|HS_WIFI_CONNECTING|WiFi Connecting|<img src="images/ledPatterns/slowFlashing.svg" width=300>|
+|HS_ETH_CONNECTING|Ethernet Connecting|<img src="images/ledPatterns/slowFlashing.svg" width=300>|
+|HS_PAIRING_NEEDED|Device not yet Paired|<img src="images/ledPatterns/slowDoubleBlink.svg" width=300>|
+|HS_PAIRED|Device Paired.  Waiting for HomeKit Connection|<img src="images/ledPatterns/slowDoubleBlinkInverted.svg" width=300>|
+|HS_CONNECTED|Device is Connected to HomeKit|<img src="images/ledPatterns/on.svg" width=300>|
+|HS_ENTERING_CONFIG_MODE|Entering Command Mode|<img src="images/ledPatterns/rapidFlashing.svg" width=300>|
+|HS_CONFIG_MODE_EXIT|1. Exit Command Mode|<img src="images/ledPatterns/fastBlink1.svg" width=300>|
 
 The optional ***homeSpan*** method, `void setStatusCallback(void (*func)(HS_STATUS status))`, can be used to create a callback function, *func*, that HomeSpan calls whenever its status changes.  HomeSpan passes *func* a single argument, *status*, of type *HS_STATUS*, defined as follows:
 
