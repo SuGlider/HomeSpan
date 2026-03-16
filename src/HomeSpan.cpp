@@ -1421,7 +1421,7 @@ void Span::setStatus(HS_STATUS hst){
     case HS_WIFI_CONNECTING: statusLED->start(2000); break;                       // slow flashing
     case HS_ETH_CONNECTING: statusLED->start(2000); break;                        // slow flashing
     case HS_PAIRING_NEEDED: statusLED->start(300,0.5,2,2400); break;              // slow double-blink
-    case HS_PAIRED: statusLED->start(300,0.2,2,2000,true); break;                 // inverted double-blink
+    case HS_PAIRED: statusLED->start(300,0.5,2,2400,true); break;                 // inverted slow double-blink
     case HS_CONNECTED: statusLED->on(); break;                                    // ON
     case HS_ENTERING_CONFIG_MODE: statusLED->start(100); break;                   // rapid flashing
     case HS_CONFIG_MODE_EXIT: statusLED->start(500,0.3,1,1000); break;            // fast 1x blink
