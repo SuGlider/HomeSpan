@@ -9,7 +9,7 @@
 |HS_PAIRING_NEEDED|<img src="images/ledPatterns/slowDoubleBlink.svg" width=300>|
 |HS_PAIRED|<img src="images/ledPatterns/slowDoubleBlinkInverted.svg" width=300>|
 |HS_CONNECTED|<img src="images/ledPatterns/on.svg" width=300>|
-|HS_ENTERING_CONFIG_MODE|<img src="images/ledPatterns/rapidFlashing.svg" width=300><img src="images/ledPatterns/rapidFlashing.svg" width=300>|
+|HS_ENTERING_CONFIG_MODE|<img src="images/ledPatterns/rapidFlashing.svg" width=300>|
 
 The optional ***homeSpan*** method, `void setStatusCallback(void (*func)(HS_STATUS status))`, can be used to create a callback function, *func*, that HomeSpan calls whenever its status changes.  HomeSpan passes *func* a single argument, *status*, of type *HS_STATUS*, defined as follows:
 
