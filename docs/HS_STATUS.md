@@ -7,7 +7,7 @@
 |HS_WIFI_CONNECTING|WiFi Connecting|<img src="images/ledPatterns/slowFlashing.svg" width=300>|
 |HS_ETH_CONNECTING|Ethernet Connecting|<img src="images/ledPatterns/slowFlashing.svg" width=300>|
 |HS_PAIRING_NEEDED|Device not yet Paired|<img src="images/ledPatterns/slowDoubleBlink.svg" width=300>|
-|HS_PAIRED|Device Paired.  Waiting for HomeKit Connection|<img src="images/ledPatterns/slowDoubleBlinkInverted.svg" width=300>|
+|HS_PAIRED|Paired and waiting for HomeKit|<img src="images/ledPatterns/slowDoubleBlinkInverted.svg" width=300>|
 |HS_CONNECTED|Device is Connected to HomeKit|<img src="images/ledPatterns/on.svg" width=300>|
 |HS_ENTERING_CONFIG_MODE|Entering Command Mode|<img src="images/ledPatterns/rapidFlashing.svg" width=300>|
 |HS_CONFIG_MODE_EXIT|1. Exit Command Mode|<img src="images/ledPatterns/fastBlink1.svg" width=300>|
