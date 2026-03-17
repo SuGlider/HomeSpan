@@ -1434,8 +1434,8 @@ void Span::setStatus(HS_STATUS hst){
     case HS_CONFIG_MODE_LAUNCH_AP_SELECTED: statusLED->start(100); break;         // rapid flashing
     case HS_CONFIG_MODE_UNPAIR_SELECTED: statusLED->start(100); break;            // rapid flashing
     case HS_CONFIG_MODE_ERASE_WIFI_SELECTED: statusLED->start(100); break;        // rapid flashing
-    case HS_REBOOTING: statusLED->on(); break;                                    // OFF
-    case HS_FACTORY_RESET: statusLED->on(); break;                                // OFF
+    case HS_REBOOTING: statusLED->off(); break;                                   // OFF
+    case HS_FACTORY_RESET: statusLED->off(); break;                               // OFF
     case HS_AP_STARTED: homeSpan.statusLED->start(100,0.5,2,300); break;          // rapid double-blink
     case HS_AP_CONNECTED: homeSpan.statusLED->start(300,0.5,2,400); break;        // medium double-blink
     case HS_AP_TERMINATED: statusLED->start(100); break;                          // rapid flashing
@@ -1484,7 +1484,7 @@ const char* Span::statusString(HS_STATUS s){
     case HS_WIFI_CONNECTING: return("WiFi Connecting");
     case HS_ETH_CONNECTING: return("Ethernet Connecting");
     case HS_PAIRING_NEEDED: return("Device not yet Paired");
-    case HS_PAIRED: return("Device Paired.  Waiting for HomeKit Connection");
+    case HS_PAIRED: return("Paired and waiting for HomeKit");
     case HS_CONNECTED: return("Device is Connected to HomeKit");
     case HS_ENTERING_CONFIG_MODE: return("Entering Command Mode");
     case HS_CONFIG_MODE_EXIT: return("1. Exit Command Mode"); 
