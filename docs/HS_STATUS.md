@@ -1,4 +1,4 @@
-# HomeSpan States, the HomeSpan Status LED and the HomeSpan Control Button
+# HomeSpan States, Status LED, and Control Button
 
 In addition to keeping track of all the HomeKit Accessories, Services, and Characteristics you've implemented in a HomeSpan sketch, HomeSpan also keeps track of its global operating **state** (e.g. connecting to WiFi, updating via OTA, etc.).  This state can be read programmatically from within your sketch (see below for details) but is more often communicated visually via different blinking patterns of an *optional* Status LED you can implement on your device.  This LED can be a simple analog single-color LED or an addressable Pixel LED. Many manufacturers include one or both of these on their ESP32 boards, though you can use a separate LED if desired.
 
