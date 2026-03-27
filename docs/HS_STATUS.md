@@ -1,32 +1,32 @@
 # HomeSpan Status
 
 
-|HomeSpan Status|Description|Status LED Pattern|
+|HomeSpan Status|Status String|Status LED Pattern|
 |---|---|---|
-|HS_WIFI_NEEDED|WiFi Credentials Needed|<img src="images/ledPatterns/slowSingleBlink.svg" width=300>|
-|HS_WIFI_CONNECTING|WiFi Connecting|<img src="images/ledPatterns/slowFlashing.svg" width=300>|
-|HS_ETH_CONNECTING|Ethernet Connecting|<img src="images/ledPatterns/slowFlashing.svg" width=300>|
-|HS_PAIRING_NEEDED|Device not yet Paired|<img src="images/ledPatterns/slowDoubleBlink.svg" width=300>|
-|HS_PAIRED|Paired and waiting for HomeKit|<img src="images/ledPatterns/slowDoubleBlinkInverted.svg" width=300>|
-|HS_CONNECTED|Device is Connected to HomeKit|<img src="images/ledPatterns/on.svg" width=300>|
-|HS_ENTERING_CONFIG_MODE|Entering Command Mode|<img src="images/ledPatterns/rapidFlashing.svg" width=300>|
-|HS_CONFIG_MODE_EXIT|1. Exit Command Mode|<img src="images/ledPatterns/fastBlink1.svg" width=300>|
-|HS_CONFIG_MODE_REBOOT|2. Reboot Device|<img src="images/ledPatterns/fastBlink2.svg" width=300>|
-|HS_CONFIG_MODE_LAUNCH_AP|3. Launch Access Point|<img src="images/ledPatterns/fastBlink3.svg" width=300>|
-|HS_CONFIG_MODE_UNPAIR|4. Unpair Device|<img src="images/ledPatterns/fastBlink4.svg" width=300>|
-|HS_CONFIG_MODE_ERASE_WIFI|5. Erase WiFi Credentials|<img src="images/ledPatterns/fastBlink5.svg" width=300>|
-|HS_CONFIG_MODE_EXIT_SELECTED|Exiting Command Mode...|<img src="images/ledPatterns/rapidFlashing.svg" width=300>|
-|HS_CONFIG_MODE_REBOOT_SELECTED|Rebooting Device...|<img src="images/ledPatterns/rapidFlashing.svg" width=300>|
-|HS_CONFIG_MODE_LAUNCH_AP_SELECTED|Launching Access Point...|<img src="images/ledPatterns/rapidFlashing.svg" width=300>|
-|HS_CONFIG_MODE_UNPAIR_SELECTED|Unpairing Device...|<img src="images/ledPatterns/rapidFlashing.svg" width=300>|
-|HS_CONFIG_MODE_ERASE_WIFI_SELECTED|Erasing WiFi Credentials...|<img src="images/ledPatterns/rapidFlashing.svg" width=300>|
-|HS_REBOOTING|REBOOTING|<img src="images/ledPatterns/off.svg" width=300>|
-|HS_FACTORY_RESET|Performing Factory Reset...|<img src="images/ledPatterns/off.svg" width=300>|
-|HS_AP_STARTED|Access Point Started|<img src="images/ledPatterns/rapidDoubleBlink.svg" width=300>|
-|HS_AP_CONNECTED|Access Point Connected|<img src="images/ledPatterns/mediumDoubleBlink.svg" width=300>|
-|HS_AP_TERMINATED|Access Point Terminated|<img src="images/ledPatterns/rapidFlashing.svg" width=300>|
-|HS_OTA_STARTED|OTA Update Started|<img src="images/ledPatterns/mediumTripleBlink.svg" width=300>|
-|HS_WIFI_SCANNING|WiFi Scanning Started|<img src="images/ledPatterns/longTripleBlink.svg" width=300>|
+|<details><summary>HS_WIFI_NEEDED</summary><i>WiFi Credentials have not yet been set/stored, and an Ethernet interface is not available</details>|WiFi Credentials Needed|<img src="images/ledPatterns/slowSingleBlink.svg" width=300>|
+|<details><summary>HS_WIFI_SCANNING</summary><i>HomeSpan is in the process of scanning (or re-scanning) for WiFi network Access Points</details>|WiFi Scanning Started|<img src="images/ledPatterns/longTripleBlink.svg" width=300>|
+|<details><summary>HS_WIFI_CONNECTING</summary><i>HomeSpan is trying to connect to the WiFi network specified in the stored WiFi Credentials</details>|WiFi Connecting|<img src="images/ledPatterns/slowFlashing.svg" width=300>|
+|<details><summary>HS_ETH_CONNECTING</summary><i>HomeSpan is trying to connect to an Ethernet network using the Ethernet interface configured</details>|Ethernet Connecting|<img src="images/ledPatterns/slowFlashing.svg" width=300>|
+|<details><summary>HS_PAIRING_NEEDED</summary><i>HomeSpan is connected to a network, but the device has not yet been paired with HomeKit</details>|Device not yet Paired|<img src="images/ledPatterns/slowDoubleBlink.svg" width=300>|
+|<details><summary>HS_PAIRED</summary><i>HomeSpan is connected to a network and the device has been paired with HomeKit, but there are no active HomeKit connections</details>|Paired and waiting for HomeKit|<img src="images/ledPatterns/slowDoubleBlinkInverted.svg" width=300>|
+|<details><summary>HS_CONNECTED</summary><i>HomeSpan is connected to a network, the device has been paired to HomeKit, and there is at least one active HomeKit connection</details>|Device is Connected to HomeKit|<img src="images/ledPatterns/on.svg" width=300>|
+|<details><summary>HS_ENTERING_CONFIG_MODE</summary><i>User has requested the device to enter into Command Mode</details>|Entering Command Mode|<img src="images/ledPatterns/rapidFlashing.svg" width=300>|
+|<details><summary>HS_CONFIG_MODE_EXIT</summary><i>HomeSpan is in Command Mode with "Exit Command Mode" specified as choice</details>|1. Exit Command Mode|<img src="images/ledPatterns/fastBlink1.svg" width=300>|
+|<details><summary>HS_CONFIG_MODE_REBOOT</summary><i>HomeSpan is in Command Mode with "Reboot" specified as choice</details>|2. Reboot Device|<img src="images/ledPatterns/fastBlink2.svg" width=300>|
+|<details><summary>HS_CONFIG_MODE_LAUNCH_AP</summary><i>HomeSpan is in Command Mode with "Launch Access Point" specified as choice</details>|3. Launch Access Point|<img src="images/ledPatterns/fastBlink3.svg" width=300>|
+|<details><summary>HS_CONFIG_MODE_UNPAIR</summary><i>HomeSpan is in Command Mode with "Unpair Device" specified as choice</details>|4. Unpair Device|<img src="images/ledPatterns/fastBlink4.svg" width=300>|
+|<details><summary>HS_CONFIG_MODE_ERASE_WIFI</summary><i>HomeSpan is in Command Mode with "Erase WiFi Credentials" specified as choice</details>|5. Erase WiFi Credentials|<img src="images/ledPatterns/fastBlink5.svg" width=300>|
+|<details><summary>HS_CONFIG_MODE_EXIT_SELECTED</summary><i>User has selected "Exit Command Mode"</details>|Exiting Command Mode...|<img src="images/ledPatterns/rapidFlashing.svg" width=300>|
+|<details><summary>HS_CONFIG_MODE_REBOOT_SELECTED</summary><i>User has select "Reboot" from the Command Mode</details>|Rebooting Device...|<img src="images/ledPatterns/rapidFlashing.svg" width=300>|
+|<details><summary>HS_CONFIG_MODE_LAUNCH_AP_SELECTED</summary><i>User has selected "Launch AP Access" from the Command Mode</details>|Launching Access Point...|<img src="images/ledPatterns/rapidFlashing.svg" width=300>|
+|<details><summary>HS_CONFIG_MODE_UNPAIR_SELECTED</summary><i>User has seleected "Unpair Device" from the Command Mode</details>|Unpairing Device...|<img src="images/ledPatterns/rapidFlashing.svg" width=300>|
+|<details><summary>HS_CONFIG_MODE_ERASE_WIFI_SELECTED</summary><i>User has selected "Erase WiFi Credentials" from the Command Mode</details>|Erasing WiFi Credentials...|<img src="images/ledPatterns/rapidFlashing.svg" width=300>|
+|<details><summary>HS_REBOOTING</summary><i>HomeSpan is in the process of rebooting the device</details>|REBOOTING|<img src="images/ledPatterns/off.svg" width=300>|
+|<details><summary>HS_FACTORY_RESET</summary><i>HomeSpan is in the process of performing a Factory Reset of device</details>|Performing Factory Reset...|<img src="images/ledPatterns/off.svg" width=300>|
+|<details><summary>HS_AP_STARTED</summary><i>The HomeSpan Setup Access Point is started but no client has yet connected</details>|Access Point Started|<img src="images/ledPatterns/rapidDoubleBlink.svg" width=300>|
+|<details><summary>HS_AP_CONNECTED</summary><i>The HomeSpan Setup Access Point is running and a client is connected</details>|Access Point Connected|<img src="images/ledPatterns/mediumDoubleBlink.svg" width=300>|
+|<details><summary>HS_AP_TERMINATED</summary><i>The HomeSpan Setup Access Point has been terminated</details>|Access Point Terminated|<img src="images/ledPatterns/rapidFlashing.svg" width=300>|
+|<details><summary>HS_OTA_STARTED</summary><i>HomeSpan is in the process of receiving an Over-the-Air software update</details>|OTA Update Started|<img src="images/ledPatterns/mediumTripleBlink.svg" width=300>|
 
 
 The optional ***homeSpan*** method, `void setStatusCallback(void (*func)(HS_STATUS status))`, can be used to create a callback function, *func*, that HomeSpan calls whenever its status changes.  HomeSpan passes *func* a single argument, *status*, of type *HS_STATUS*, defined as follows:
