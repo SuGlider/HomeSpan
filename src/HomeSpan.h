@@ -102,6 +102,7 @@ extern "C" bool verifyRollbackLater();    // declare pre-defined Arduino-ESP32 v
 ///////////////////////////////
 
 enum HS_STATUS {
+  HS_INITIAL_SETUP,                       // HomeSpan is running code in the setup() portion of the sketch
   HS_WIFI_NEEDED,                         // WiFi Credentials have not yet been set/stored
   HS_WIFI_CONNECTING,                     // HomeSpan is trying to connect to the network specified in the stored WiFi Credentials
   HS_PAIRING_NEEDED,                      // HomeSpan is connected to central WiFi network, but device has not yet been paired to HomeKit
@@ -288,7 +289,7 @@ class Span{
   boolean initialPollingCompleted=false;        // flag to indicate whether polling task has initially completed
   boolean forceConfigIncrement=false;           // flag to indicate whether configuration number (MDNS C# value) should be incremented even if database config has not changed
   char *compileTime=NULL;                       // optional compile time string --- can be set with call to setCompileTime()
-  HS_STATUS hsStatus;                           // current HomeSpan status
+  HS_STATUS hsStatus=HS_INITIAL_SETUP;          // current HomeSpan status
   uint32_t hsStatusTime;                        // timestamp (in seconds) of latest recent HomeSpan status update
   std::shared_mutex hsStatusMux;                // shared read/write lock
    

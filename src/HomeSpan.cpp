@@ -1488,6 +1488,7 @@ void Span::reboot(){
 
 const char* Span::statusString(HS_STATUS s){
   switch(s){
+    case HS_INITIAL_SETUP: return("HomeSpan Initializing");
     case HS_WIFI_NEEDED: return("WiFi Credentials Needed");
     case HS_WIFI_CONNECTING: return("WiFi Connecting");
     case HS_ETH_CONNECTING: return("Ethernet Connecting");
