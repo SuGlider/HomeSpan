@@ -1,8 +1,8 @@
 # HomeSpan User Guide
 1. [Introduction](#introduction)
 2. [Getting Started](#getting-started)
-3. [HomeSpan Device States](#homespan-device-states)
-4. [Device Configuration Mode](#device-configuration-mode)
+3. [HomeSpan Device Status](#homespan-device-status)
+4. [Device Configuration Mode](#device-command-mode)
 5. [Setting HomeSpan’s WiFi Credentials and Setup Code](#setting-homespans-wifi-credentials-and-setup-code)
 6. [Pairing to HomeKit](#pairing-to-homekit)
 7. [Factory Reset](#factory-reset)
