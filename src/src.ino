@@ -56,7 +56,7 @@ void setup() {
 
 void loop(){
 
- homeSpan.poll();
+  homeSpan.poll();
 
   auto [ status, duration] = homeSpan.getStatus();
   if(status==HS_PAIRING_NEEDED && duration > 30){
