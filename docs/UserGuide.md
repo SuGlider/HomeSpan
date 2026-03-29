@@ -11,7 +11,7 @@
 
 
 ## Introduction
-This guide explains how to set up and configure a HomeSpan device that has already been programmed to operate one or more appliances, including how to:
+This guide explains how to set up and configure a HomeSpan device that has **already been programmed** to operate one or more appliances, including how to:
 
 * Determine the state of the device by observing the HomeSpan Status LED
 * Use the HomeSpan Control Button
@@ -23,7 +23,7 @@ This guide explains how to set up and configure a HomeSpan device that has alrea
 * Unpair the device from Apple HomeKit
 * Perform a Factory Reset
 
-This guide does not cover the specific operation of any appliances being controlled by a HomeSpan device, such a light, fan, window shade, etc.  This document is also available as a [PDF file](./HomeSpanUserGuide.pdf) formatted to be printed as a double-sided booklet.
+This guide does not cover the specific operation of any appliances being controlled by a HomeSpan device, such a light, fan, window shade, etc.  Also, the instructions below assume you will be using WiFi to connect your device to your home network (as opposed to connecting via an Ethernet interface) and that the device includes both a HomeSpan Status LED and a HomeSpan Control Button.
 
 ## Getting Started
 
@@ -44,23 +44,15 @@ If you are setting up an existing device that has been previously configured in 
 
 Enjoy!
 
-## HomeSpan Device States
+## HomeSpan Device Status
 
-Before you can configure HomeSpan, you need to determine the state of the device.  HomeSpan devices indicate their state via the HomeSpan Status LED, which is either on, off, blinking, or flashing, according to the device’s current state.   The 4 main states of the device are:
+Before you can configure HomeSpan, you need to determine the status of the device.  HomeSpan devices indicate their status via the HomeSpan Status LED, which is either on, off, blinking, or flashing, according to the device’s current state.   The 5 main states of the device are:
 
-#### NO‑WIFI
+#### WIFI_NEEDED
 
-If the Status LED blinks once every 3 seconds, the device is lacking any stored WiFi Credentials and therefore cannot connect to a WiFi network.  This is the normal state of a new device as well as any device that has had its WiFi Credentials erased.  See [Setting HomeSpan’s WiFi Credentials and Setup Code](#setting-homespans-wifi-credentials-and-setup-code) to learn how to input and store your home network’s WiFi name and WiFi password on the device.
+If the Status LED blinks ON once every 3 seconds, the device is lacking any stored WiFi Credentials and therefore cannot connect to a WiFi network.  This is the normal status of a new device as well as any device that has had its WiFi Credentials erased.  See [Setting HomeSpan’s WiFi Credentials and Setup Code](#setting-homespans-wifi-credentials-and-setup-code) to learn how to input and store your home network’s WiFi name and WiFi password on the device.
 
-#### READY‑TO‑PAIR
-
-If the Status LED blinks twice every 3 seconds, the device is connected to a WiFi network but is not yet paired to Apple HomeKit.  See [Pairing to HomeKit](#pairing-to-homekit) for instructions on how to pair your device to Apple HomeKit.
-
-#### PAIRED
-
-If the Status LED is steady ON, the device is connected to a local WiFi network and is paired to Apple HomeKit.  A device in this state should be fully operational.
-
-#### CONNECTING
+#### WIFI_CONNECTING
 
 If the Status LED is repeatedly flashing ON for 1 second and then OFF for 1 second, the device is actively seeking to connect to a WiFi network using the WiFi Credentials stored on the device.   The device will remain in this state until:
 
@@ -68,31 +60,43 @@ If the Status LED is repeatedly flashing ON for 1 second and then OFF for 1 sec
 * you modify or erase the device's WiFi Credentials and restart HomeSpan via the [Device Configuration Mode](#device-configuration-mode) below;
 * you perform a [Factory Reset](#factory-reset).
 
-Note that the Status LED is always active, so if the LED is completely off (not even blinking), the device is not powered!
+#### PAIRING_NEEDED
 
-## Device Configuration Mode
+If the Status LED blinks ON twice every 3 seconds, the device is connected to a WiFi network but is not yet paired to Apple HomeKit.  See [Pairing to HomeKit](#pairing-to-homekit) for instructions on how to pair your device to Apple HomeKit.
 
-The Device Configuration Mode allows you to perform various configuration operations.  Device Configuration Mode can be accessed when the device is in any of the following states:  **NO‑WIFI**, **READY‑TO‑PAIR**, or **PAIRED**.
+#### PAIRED
 
-To enter Device Configuration Mode, press and hold the Control Button for 3 seconds, at which point the Status LED should begin to flash rapidly (10 times per second).  Upon releasing the button the device will switch into the Device Configuration Mode.
+If the Status LED is ON but blinks OFF twice every 3 seconds, the device is connected to a WiFi network *and* is paired with HomeKit, *but* is waiting for HomeKit to reach out to your device and initiate a secure connection.  This process is outside the control of HomeSpan - your HomeKit Hubs should automatically seek for paired HomeSpan devices on your network and establish secure connections with them when found.
 
-Within Device Configuration Mode you can choose one of five possible Actions:
+#### CONNECTED
 
-1. *Exit Device Configuration Mode*.  If you have unintentionally entered Device Configuration Mode, select this action to exit and return to the previous state.
+If the Status LED is steady ON, the device is connected to a local WiFi network, is paired to Apple HomeKit, and has established at least one secure connection to HomeKit.  **A device in this state should be fully operational.**
+
+Note that after HomeSpan initially boots the HomeSpan Status LED should always show some activity. If the LED is completely off (not even blinking), the device is likely not powered!
+
+## Device Command Mode
+
+The Device Command Mode allows you to perform various configuration operations and can be accessed any time the device is in any of the states described above.
+
+To enter Device Command Mode, press and hold the Control Button for 3 seconds, at which point the Status LED should begin to flash rapidly (10 times per second).  Upon releasing the button the device will switch into the Device Command Mode.
+
+Within Device Command Mode you can choose one of five possible Actions:
+
+1. *Exit Device Command Mode*.  If you have unintentionally entered Device Command Mode, select this action to exit and return to the previous state.
 
 1. *Reboot the device*.  If the device is not operating as expecting, a simple reboot often corrects error.
 
-1. *Launch HomeSpan’s temporary WiFi network*.  HomeSpan’s temporary WiFi network provides a simple web interface for you to input your home network’s WiFi credentials and (optionally) create your own HomeKit Setup Code.  See [Setting HomeSpan’s WiFi Credentials and Setup Code](#setting-homespans-wifi-credentials-and-setup-code) for step-by-step instructions.
+1. *Launch HomeSpan’s Setup Access Point*.  HomeSpan’s Setup Access Point network provides a temporary web interface for you to input your home network’s WiFi credentials and (optionally) create your own HomeKit Setup Code.  See [Setting HomeSpan’s WiFi Credentials and Setup Code](#setting-homespans-wifi-credentials-and-setup-code) for step-by-step instructions.
 
 1. *Unpair the device from Apple HomeKit*.  Under normal operation, you control the pairing and unpairing of all HomeKit devices from the Home App on your iPhone or Mac. However, there are some circumstances in which a device may need to be manually unpaired.  This is typically done by performing a full [Factory Reset](#factory-reset) of the device, but that also deletes your WiFi Credentials.  This action allows you to unpair the device while preserving all other device settings.
 
 1. *Erase stored WiFi Credentials*.  This allows you delete your WiFi Credentials from the device without losing any HomeKit pairing data, after which the device can be set up with new WiFi Credentials.
 
-When the Device Configuration Mode is first started, the Status LED will blink once per second to indicate Action 1 has been selected.  To select the Action 2, briefly press and release the Control Button.  The Status LED will now exhibit a double-blink pattern with a one second pause between blinks, indicating Action 2 has been selected.  Each press of the Control Button selects the next action and causes the Status LED to blink according to the Action number.  Pressing the Control Button once you reach Action 5 brings the selection back to Action 1.
+When the Device Command Mode is first started, the Status LED will blink once per second to indicate Action 1 has been selected.  To select the Action 2, briefly press and release the Control Button.  The Status LED will now exhibit a double-blink pattern with a one second pause between blinks, indicating Action 2 has been selected.  Each press of the Control Button selects the next action and causes the Status LED to blink according to the Action number.  Pressing the Control Button once you reach Action 5 brings the selection back to Action 1.
 
 To execute the selected Action press and hold the Control Button for 3 seconds, at which time the Status LED will begin to flash rapidly (10 times a second).  Upon releasing the button HomeSpan will perform the Action selected, and the Status LED will change patterns to reflect the new state of the device after the Action has been taken.
 
-If no Action has been executed within 120 seconds (2 minutes) of starting the Device Configuration Mode, Action 1 is automatically executed and the Device Configuration Mode is exited.
+If no Action has been executed within 120 seconds (2 minutes) of starting the Device Command Mode, Action 1 is automatically executed and the Device Command Mode is exited.
 
 ##	Setting HomeSpan’s WiFi Credentials and Setup Code
 
