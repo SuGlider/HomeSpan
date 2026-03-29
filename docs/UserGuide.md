@@ -2,20 +2,18 @@
 1. [Introduction](#introduction)
 2. [Getting Started](#getting-started)
 3. [HomeSpan Device Status](#homespan-device-status)
-4. [Device Configuration Mode](#device-command-mode)
+4. [Device Command Mode](#device-command-mode)
 5. [Setting HomeSpan’s WiFi Credentials and Setup Code](#setting-homespans-wifi-credentials-and-setup-code)
 6. [Pairing to HomeKit](#pairing-to-homekit)
 7. [Factory Reset](#factory-reset)
 8. [Creating a Scannable Tag](#creating-a-scannable-tag)
-9. [Status LED Flashing Reference](#status-led-flashing-reference)
-
 
 ## Introduction
 This guide explains how to set up and configure a HomeSpan device that has **already been programmed** to operate one or more appliances, including how to:
 
 * Determine the state of the device by observing the HomeSpan Status LED
 * Use the HomeSpan Control Button
-* Operate the device in Device Configuration Mode
+* Operate the device in Device Command Mode
 * Connect the device to your home WiFi network and store your WiFi Credentials on the device
 * Disconnect the device from your home WiFi network and erase your WiFi Credentials from the device
 * Pair the device to Apple HomeKit
@@ -57,7 +55,7 @@ If the Status LED blinks ON once every 3 seconds, the device is lacking any stor
 If the Status LED is repeatedly flashing ON for 1 second and then OFF for 1 second, the device is actively seeking to connect to a WiFi network using the WiFi Credentials stored on the device.   The device will remain in this state until:
 
 * HomeSpan successfully connects to a WiFi network;
-* you modify or erase the device's WiFi Credentials and restart HomeSpan via the [Device Configuration Mode](#device-configuration-mode) below;
+* you modify or erase the device's WiFi Credentials and restart HomeSpan via the [Device Command Mode](#device-command-mode) below;
 * you perform a [Factory Reset](#factory-reset).
 
 #### PAIRING_NEEDED
@@ -72,7 +70,9 @@ If the Status LED is ON but blinks OFF twice every 3 seconds, the device is conn
 
 If the Status LED is steady ON, the device is connected to a local WiFi network, is paired to Apple HomeKit, and has established at least one secure connection to HomeKit.  **A device in this state should be fully operational.**
 
-Note that after HomeSpan initially boots the HomeSpan Status LED should always show some activity. If the LED is completely off (not even blinking), the device is likely not powered!  Also, for a complete list of all HomeSpan states and Status LED patterns, see the [HomeSpan Status and the HomeSpan Status LED](HS_STATUS.md) page.
+Note that after HomeSpan initially boots the HomeSpan Status LED should always show some activity.[^states] If the LED is completely off (not even blinking), the device is likely not powered!
+
+[^states]: For a complete list of all HomeSpan Status states and Status LED patterns, see the [HomeSpan Status and the HomeSpan Status LED](HS_STATUS.md) page.
 
 ## Device Command Mode
 
