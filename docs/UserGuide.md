@@ -160,11 +160,7 @@ After 10 seconds the Status LED will turn off.  Upon releasing the Control Butto
 
 Scannable tags, such as the one shown above containing HomeSpan’s default Setup Code, require a special Apple font called *Scancardium*, and a correctly-proportioned border.  Fortunately, this is very easy to create on a Mac since Apple includes a file with this font as part of the operating system, though it needs to first be installed to use it in *Pages* or *Keynote*.
 
-To install, open Finder on your Mac and go to the following folder:
-
-`/System/Library/PrivateFrameworks/CoreRecognition.framework/Resources/Fonts`
-
-Next, double-click the file **Scancardium_2.0.tff**, which opens it in *Font Book*.  Then, within *Font Book*, click `Install Font`.  *Scancardium* is now ready to use.
+To install, first open the *Finder* on your Mac, go to the top level folder (usually labeled "Macintosh HD") and enter ***scancardium*** into the *Finder's* search bar.  This should reveal the file **Scancardium_2.0.tff** in the main window of the *Finder*.  Next, double-click the file to open it in *Font Book*.  Then, within *Font Book*, click `Install Font`.  *Scancardium* is now ready to use.
 
 To create the scannable tag, construct a simple text box with a border in either *Pages* or *Keynote* using the following dimensions:
 
