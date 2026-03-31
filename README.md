@@ -75,20 +75,41 @@ HomeSpan provides a microcontroller-focused implementation of Apple's HomeKit Ac
 
 ### New Features
 
-* **HomeSpan now supports two-wire WS2801-based addressable RGB LEDs**
-  
-  * adds new **WS2801_LED** class
-  * uses SPI bus for optimal performance 
-  * includes the same `set()` and `Color()` methods used by HomeSpan's existing **Pixel** and **Dot** classes:
-  * adds a fully worked example of implementing a [25-pixel WS2801 RGB LED strand](https://www.adafruit.com/product/738) to HomeSpan's [Pixel](examples/Other%20Examples/Pixel) tutorial sketch
-  * see the [Pixels](docs/Pixels.md) page for complete documentation
+* **Updated HomeSpan Status logic and functionality for improved diagnostics**
+  * Added new *HS_STATUS* enum type **HS_CONNECTED**
+    * reflects fully operational state where HomeSpan is connected to a WiFi or Ethernet network, paired to HomeKit *and* is maintaining one or more secure connections to HomeKit
+    * Status LED set to steady ON when in this state
+  * Modified *HS_STATUS* enum type **HS_PAIRED** 
+    * reflects potential "No Response" state where HomeSpan is connected to a WiFi or Ethernet network, paired to HomeKit *but* does **not** (yet) have any open secure connections to HomeKit
+    * Status LED set to inverted double-blink when in this state
+  * Added new `std::pair<HS_STATUS,uint32_t> homeSpan.getStatus()` method
+    * returns *std::pair* containing:
+      * current HomeSpan Status as *HS_STATUS* enum type
+      * duration (in seconds) since HomeSpan first changed to that Status
+    * this thread-safe method allows user to actively poll HomeSpan status and duration from the main `loop()` as alternative to using `homeSpan.setStatusCallback()` (which is only called when the HomeSpan Status changes)
+  * Added new `void homeSpan.resetStatusDuration()` method
+    * this thread-safe method allows user to reset current HomeSpan Status duration to zero
+  * Complete re-write of HomeSpan Status documentation
+    * demonstrates how to use the new methods above
+    * provides example of using `homeSpan.getStatus()` to reboot HomeSpan if the device has lost secure HomeKit connections for an extended period of time
+    * adds table providing graphic representation of all Status LED patterns for each HomeSpan Status state
+    * adds direct link to this documentation on the main HomeSpan README.md page
+  * See [HomeSpan Status and the HomeSpan Status LED](docs/HS_STATUS.md) for details
 
-### Updates and Corrections
+* **Improvements to Web Log output**
+  * Added new **Client Connections Table** (similar output to 's' CLI command)
+    * used as diagnostic to check whether HomeSpan has any active secure connections to HomeKit
+  * Added descriptive class names for use with custom style sheets
+    * *body* - background and header text (can use *bod1* for backwards compatibility)
+    * *infoTable* - the top table that provides general information about the device (can use *tab1* for backwards compatibility)
+    * *clientTable* - the newly-added table listing all active client connections (can use *tab2* for backwards compatibility)
+    *  *logTable* - the bottom table listed all the individual Web Log entries (can also use *tab2* for backwards compatibility)
+  * See [Message Logging](docs/Logging.md) for details 
 
-* **Corrected begin/end block logic in Dot class for improved performance of DotStar RGB LEDs**
-* **Bumped minimum required version of Arduino-ESP32 Core from 3.1.0 to 3.3.0**
-  * reflects breaking changes that were previously introduced in HomeSpan 2.1.6
-              
+* **Added new `boolean homeSpan.usingEthernet()` method**
+  * returns true if Ethernet interface is being used, else false if WiFi is being used
+* **Redirected `setVal()` out-of-range warnings to WEBLOG instead of LOG0 so these warnings will be displayed in both the Serial Monitor and the Web Log**
+            
 See [Releases](https://github.com/HomeSpan/HomeSpan/releases) for details on all changes and bug fixes included in this update.
 
 # HomeSpan Resources
