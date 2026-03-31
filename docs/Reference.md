@@ -221,6 +221,9 @@ The following **optional** `homeSpan` methods enable additional features and pro
  
 * `Span& useEthernet()`
   * forces HomeSpan to use Ethernet instead of WiFi, even if ETH has not yet been called or an Ethernet card has not been found prior to `homeSpan.begin()` being called
+
+* `boolean usingEthernet()`
+  * returns true if Ethernet is being used, else false if WiFi is being used
     
 * `Span& setPairCallback(void (*func)(boolean status))`
   * sets an optional user-defined callback function, *func*, to be called by HomeSpan upon completion of pairing to a controller (*status=true*) or unpairing from a controller (*status=false*)
@@ -234,6 +237,14 @@ The following **optional** `homeSpan` methods enable additional features and pro
   * the function *func* must be of type *void* and have no arguments
   * see the `controllerListBegin()` and `controllerListEnd()` methods for details on how to read the pairing data for each paired controller (*only needed to support certain advanced use cases*)
  
+* `std::pair< HS_STATUS, uint32_t > getStatus()`
+  * returns a std::pair containing:
+    * the current HomeSpan Status as an enum type [HS_STATUS](HS_STATUS.md)
+    * the duration (in seconds) since HomeSpan last changed to that Status
+
+* `void resetStatusDuration()`
+  * resets the duration timer returned by `getStatus()` above to zero
+
 * `Span& setStatusCallback(void (*func)(HS_STATUS status))`
   * sets an optional user-defined callback function, *func*, to be called by HomeSpan whenever its running state (e.g. WiFi Connecting, Pairing Needed...) changes in way that would alter the blinking pattern of the (optional) Status LED
   * if *func* is set, it will be called regardless of whether or not a Status LED has actually been defined
@@ -243,7 +254,7 @@ The following **optional** `homeSpan` methods enable additional features and pro
 * `char* statusString(HS_STATUS s)`
   * returns a pre-defined character string message representing *s*, which must be of enum type [HS_STATUS](HS_STATUS.md)
   * typically used in conjunction with `setStatusCallback()` above
-
+ 
 * `Span& setPollingCallback(void (*func)())`
   * sets an optional user-defined callback function, *func*, to be called by HomeSpan *one time* upon completing its first pass through the HomeSpan `poll()` function
   * the function *func* must be of type *void* and have no arguments
@@ -577,7 +588,7 @@ This is a **base class** from which all HomeSpan Characteristics are derived, an
 * `void setVal(value [,boolean notify])`
   * sets the value of a numerical-based Characteristic to *value*, and, if *notify* is set to true, notifies all HomeKit Controllers of the change.  The *notify* flag is optional and will be set to true if not specified.  Setting the *notify* flag to false allows you to update a Characateristic without notifying any HomeKit Controllers, which is useful for Characteristics that HomeKit automatically adjusts (such as a countdown timer) but will be requested from the Accessory if the Home App closes and is then re-opened
   * works with any integer, boolean, or floating-based numerical *value*, though HomeSpan will convert *value* into the appropriate type for each Characteristic (e.g. calling `setValue(5.5)` on an integer-based Characteristic results in *value*=5)
-  * throws a runtime warning if *value* is outside of the min/max range for the Characteristic, where min/max is either the HAP default, or any new min/max range set via a prior call to `setRange()`
+  * throws a runtime warning to both the Serial Monitor and the Web Log (when enabled) if *value* is outside of the min/max range for the Characteristic, where min/max is either the HAP default, or any new min/max range set via a prior call to `setRange()`
   * note that *value* is **not** restricted to being an increment of the step size; for example it is perfectly valid to call `setVal(43.5)` after calling `setRange(0,100,5)` on a floating-based Characteristic even though 43.5 does does not align with the step size specified.  The Home App will properly retain the value as 43.5, though it will round to the nearest step size increment (in this case 45) when used in a slider graphic (such as setting the temperature of a thermostat)
   * throws a runtime warning if called from within the `update()` routine of a **SpanService** *and* `isUpdated()` is *true* for the Characteristic (i.e. it is being updated at the same time via the Home App), *unless* you are changing the value of a Characteristic in response to a *write-response* request from HomeKit (typically used only for certain TLV-based Characteristics)
   * note this method can be used to update the value of a Characteristic even if the Characteristic is not permissioned for event notifications (EV), in which case the value stored by HomeSpan will be updated but the Home App will *not* be notified of the change
