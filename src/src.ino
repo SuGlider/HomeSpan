@@ -37,7 +37,7 @@ void setup() {
   homeSpan.enableWebLog(50).setWebLogFavicon();
   homeSpan.setCompileTime();
   homeSpan.setStatusCallback([](HS_STATUS status){
-    WEBLOG("<span style\=\"color:red\">HOMESPAN STATUS: %s</span>",homeSpan.statusString(status));
+    WEBLOG("<span style=\"color:red\">HOMESPAN STATUS: %s</span>",homeSpan.statusString(status));
     });
                     
   homeSpan.begin(Category::Lighting,"HomeSpan Basic");
@@ -49,7 +49,7 @@ void setup() {
       new Characteristic::On();
 
   auto [ status, duration] = homeSpan.getStatus();
-  WEBLOG("<span style\=\"color:red\">INITIAL HOMESPAN STATUS: %s</span>",homeSpan.statusString(status));
+  WEBLOG("<span style=\"color:red\">INITIAL HOMESPAN STATUS: %s</span>",homeSpan.statusString(status));
 
   // homeSpan.autoPoll();
 }
