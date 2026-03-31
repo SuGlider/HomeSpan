@@ -413,7 +413,7 @@ class Span{
     return(*this);
     }
 
-  Span& setControlTimes(uint32_t comTime, uint32_t resTime){                             // sets Control Pin times (in millis) for entering/exiting Command Mode and for Factory Reset
+  Span& setControlTimes(uint32_t comTime, uint32_t resTime){                             // sets Control Button hold times (in millis) for entering/exiting Command Mode and for Factory Reset
     if(resTime>comTime){
       cbComTime=comTime;
       cbResTime=resTime;
