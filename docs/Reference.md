@@ -399,6 +399,12 @@ The following **optional** `homeSpan` methods provide additional run-time functi
   * example: `homeSpan.resetIID(100)` causes HomeSpan to set the IID to 100 for the very next Service or Characteristic defined within the current Accessory, and then increment the IID count going forward so that any Services or Characteristics subsequently defined (within the same Accessory) have IID=101, 102, etc.
   * note: calling this function only affects the IID generation for the current Accessory (the count will be reset to IID=1 upon instantiation of a new Accessory)
 
+* `const char *getPairingInfo(char **buf)`
+  * allocates memory to *buf*, a user-provided empty **pointer** to a `char *`, and fills it with the base64-encoded pairing data of the HomeSpan device in the same format as provided by the 'P' CLI Command
+    * a pointer to *buf* itself is returned
+    * when *buf* is no longer needed, the user must call `free(buf)` to de-allocate the memory 
+  * see [Cloning Pairing Data](Cloning.md) for details
+    
 * `const_iterator controllerListBegin()` and `const_iterator controllerListEnd()`
   * returns a *constant iterator* pointing to either the *beginning*, or the *end*, of an opaque linked list that stores all controller data
   * iterators should be defined using the `auto` keyword as follows: `auto myIt=homeSpan.controllerListBegin();`
@@ -406,30 +412,11 @@ The following **optional** `homeSpan` methods provide additional run-time functi
     * `const uint8_t *getID()` returns pointer to the 36-byte ID of the controller
     * `const uint8_t *getLTPK()` returns pointer to the 32-byte Long Term Public Key of the controller
     * `boolean isAdmin()` returns true if controller has admin permissions, else returns false
-  * <details><summary>click here for example code</summary><br>
-
-    ```C++
-    // Extract and print the same data about each controller that HomeSpan prints to the Serial Monitor when using the 's' CLI command
-    
-    Serial.printf("\nController Data\n");
-    
-    for(auto it=homeSpan.controllerListBegin(); it!=homeSpan.controllerListEnd(); ++it){  // loop over each controller
-    
-      Serial.printf("Admin=%d",it->isAdmin());    // indicate if controller has admin permissions
-
-      Serial.printf("  ID=");                     // print the 36-byte Device ID of the controller
-      for(int i=0;i<36;i++)
-        Serial.printf("%02X",it->getID()[i]);
-    
-      Serial.printf("  LTPK=");                   // print the 32-byte Long-Term Public Key of the controller)
-      for(int i=0;i<32;i++)
-        Serial.printf("%02X",it->getLTPK()[i]);
-    
-      Serial.printf("\n");
-    }
-    ```
-    </details>
-
+    * `const char *getPairingInfo(char **buf)` allocates memory to *buf*, a user-provided empty **pointer** to a `char *`, and fills it with the base64-encoded pairing data of the controller in the same format as provided by the 'P' CLI Command
+      * a pointer to *buf* itself is returned
+      * when *buf* is no longer needed, the user must call `free(buf)` to de-allocate the memory 
+  * see [Cloning Pairing Data](Cloning.md) for details
+   
 * `Span& enableWatchdog(uint16_t nSeconds)`
   * creates a HomeSpan *task watchdog* that triggers a reboot of the device if the HomeSpan `poll()` function is not run at least once every *nSeconds*
     * *nSeconds* must be equal to, or greater than, the ESP32 default task watchdog timeout period specified in the IDF macro `CONFIG_ESP_TASK_WDT_TIMEOUT_S` (typically 5 seconds)
