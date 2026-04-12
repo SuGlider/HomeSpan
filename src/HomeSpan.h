@@ -779,7 +779,7 @@ class SpanCharacteristic{
     if(format<FORMAT::STRING){
       uvSet(minValue,min);
       uvSet(maxValue,max);
-      uvSet(stepValue,0);
+      uvSet(stepValue,isCustom?1:0);
     }
 
     if(isCustom)
