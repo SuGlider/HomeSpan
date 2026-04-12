@@ -781,6 +781,9 @@ class SpanCharacteristic{
       uvSet(maxValue,max);
       uvSet(stepValue,0);
     }
+
+    if(isCustom)
+      setDescription(hapName);
           
   } // init()
 
