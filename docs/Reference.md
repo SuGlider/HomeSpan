@@ -824,7 +824,7 @@ Creates a custom Characteristic that can be added to any Service.  Custom Charac
 * *format* - for numerical Characteristics, specifies the number format.  Valid value are BOOL, UINT8, UINT16, UNIT32, UINT64, INT, and FLOAT.  Not applicable for the STRING, DATA, or TLV8 Characteristic macros
 * *defaultValue* - specifies the default value of the Characteristic when not defined during instantiation.  Not applicable for the DATA or TLV7 Characteristic macros.
 * *minValue* - specifies the default minimum range for a valid value, which may be able to be overriden by a call to `setRange()`.  Not applicable for the STRING, DATA or TLV8 Characteristic macros
-* *minValue* - specifies the default minimum range for a valid value, which may be able to be overriden by a call to `setRange()`.  Not applicable for the STRING, DATA or TLV8 Characteristic macros
+* *maxValue* - specifies the default maximum range for a valid value, which may be able to be overriden by a call to `setRange()`.  Not applicable for the STRING, DATA or TLV8 Characteristic macros
 * *staticRange* - set to *true* if *minValue* and *maxValue* are static and cannot be overridden with a call to `setRange()`.  Set to *false* if calls to `setRange()` are allowed.  Not applicable for the STRING, DATA or TLV8 Characteristic macros
 
 As an example, the first line below creates a custom Characteristic named "Voltage" with a UUID code that is recognized by the *Eve for HomeKit* app.  The parameters show that the Characteristic is read-only (PR) and notifications are enabled (EV).  The default range of allowed values is 0-240, with a default of 120.  The range *can* be overridden by subsequent calls to `setRange()`.  The second line below creates a custom read-only String-based Characteristic:
@@ -843,7 +843,7 @@ new Service::LightBulb();
 
 Note that Custom Characteristics must be created at the global level (i.e. not inside `setup()`) and prior to calling `homeSpan.begin()`
 
-> Advanced Tip 1: When presented with an unrecognized Custom Characteristic, *Eve for HomeKit* helpfully displays a *generic control* allowing you to interact with any Custom Characteristic you create in HomeSpan.  However, since Eve does not recognize the Characteristic, it will only render the generic control if the Characteristic includes a **description** field, which you can add to any Characteristic using the `setDescription()` method described above.  You may also want to use `setUnit()` and `setRange()` so that the Eve App displays a control with appropriate ranges for your Custom Characteristic.
+> Advanced Tip 1: When presented with an unrecognized Custom Characteristic, *Eve for HomeKit* helpfully displays a *generic control* allowing you to interact with any Custom Characteristic you create in HomeSpan.  The name of the Characteristic will be displayed as per the *name* argument above, and the allowed range will similarly be set according to the *minValue* and *maxValue* parameters.  You can override the display name of the Characteristic using the `setDescription()` method as well as override the range and units using the `setRange()` and `setUnit()` methods.
  
 > Advanced Tip 2: The DATA format is not currently used by any native Home App Characteristic, though it is part of the HAP-R2 specifications.  This format is included in HomeSpan because other applications, such as *Eve for HomeKit* do use these types of Characteristics to create functionality beyond that of the Home App, and are thus provided for advanced users to experiment.
  
