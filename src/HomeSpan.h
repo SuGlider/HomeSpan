@@ -859,7 +859,8 @@ class SpanCharacteristic{
     if(!staticRange){
       uvSet(minValue,min);
       uvSet(maxValue,max);
-      uvSet(stepValue,step);  
+      if(step>0)
+        uvSet(stepValue,step);  
       customRange=true; 
     } else
       setRangeError=true;
