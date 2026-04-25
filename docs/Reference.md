@@ -687,15 +687,19 @@ This is a **base class** from which all HomeSpan Characteristics are derived, an
   * example: `(new Characteristic::ConfiguredName("HDMI 1"))->removePerms(PW);`
 
 * `SpanCharacteristic *setDescription(const char *desc)`
-  * adds an optional description, *desc*, to a Characteristic, as described in HAP-R2 Table 6-3
-  * this field is generally used to provide information about custom Characteristics, but does not appear to be used in any way by the Home App
+  * adds or updates the HAP description field, *desc*, for a Characteristic, as described in HAP-R2 Table 6-3
+  * this field is generally used to modify the default description field HomeSpan automatically generates when creating a custom Characteristic
+  * the description field is required by the Eve App when displaying custom Characteristics it does not recognize (i.e. those that are neither Apple nor Eve Characteristics)
+  * this field does not otherwise appear to be used in any way by the Home App for Apple Characteristics
   * returns a pointer to the Characteristic itself so that the method can be chained during instantiation
   * example: `(new Characteristic::MyCustomChar())->setDescription("Tuner Frequency");`
 
 * `SpanCharacteristic *setUnit(const char *unit)`
-  * adds or overrides the *unit* for a Characteristic, as described in HAP-R2 Table 6-6
+  * adds or updates the unit definition, *unit*, of a Characteristic, as described in HAP-R2 Table 6-6
+  * recognized values are: "celsius", "percentage", "arcdegrees", "lux", and "seconds"
+  * the unit definition is optional and used only by the Eve App to modify the label shown when displaying custom Characteristics it does not recognize (i.e. those that are neither Apple nor Eve Characteristics)
   * returns a pointer to the Characteristic itself so that the method can be chained during instantiation
-  * example: `(new Characteristic::RotationSpeed())->setUnit("percentage");`
+  * example: `(new Characteristic::MyCustomChar())->setUnit("percentage");`
 
 * `uint32_t getIID()`
   * returns the IID of the Characteristic
